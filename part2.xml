@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hotelBookings>
+    <booking>
+        <firstName>John</firstName>
+        <lastName>Doe</lastName>
+        <roomDetails>
+            <roomNumber>101</roomNumber>
+            <roomType>Single</roomType>
+            <specialRequirements>Sea view</specialRequirements>
+        </roomDetails>
+        <duration>5</duration>
+    </booking>
+    <booking>
+        <firstName>Jane</firstName>
+        <lastName>Smith</lastName>
+        <roomDetails>
+            <roomNumber>202</roomNumber>
+            <roomType>Double</roomType>
+            <specialRequirements>King-size bed</specialRequirements>
+        </roomDetails>
+        <duration>3</duration>
+    </booking>
+    <booking>
+        <firstName>Michael</firstName>
+        <lastName>Johnson</lastName>
+        <roomDetails>
+            <roomNumber>303</roomNumber>
+            <roomType>Suite</roomType>
+            <specialRequirements>Late check-in</specialRequirements>
+        </roomDetails>
+        <duration>7</duration>
+    </booking>
+</hotelBookings>
