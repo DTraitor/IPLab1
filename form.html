@@ -1,0 +1,53 @@
+<h1>Dorm Registration</h1>
+<form id="dormForm">
+    <label for="first_name">First Name:</label><br>
+    <input type="text" id="first_name" name="first_name" required><br><br>
+
+    <label for="last_name">Last Name:</label><br>
+    <input type="text" id="last_name" name="last_name" required><br><br>
+
+    <label for="num_rooms">Number of Rooms Required:</label><br>
+    <input type="number" id="num_rooms" name="num_rooms" min="1" required><br><br>
+
+    <label for="special_requirements">Special Room Requirements:</label><br>
+    <textarea id="special_requirements" name="special_requirements" rows="4" cols="50"></textarea><br><br>
+
+    <label for="stay_length">Length of Stay (in weeks):</label><br>
+    <input type="number" id="stay_length" name="stay_length" min="1" required><br><br>
+
+    <input type="submit" value="Register">
+</form>
+
+<button id="clearData">Clear Data</button>
+
+<script>
+    document.getElementById("dormForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent actual form submission
+
+        // Retrieve existing records or initialize an empty array
+        let storedData = JSON.parse(localStorage.getItem("dormRegistrations")) || [];
+
+        // Collect current form data
+        let formData = {
+            first_name: document.getElementById("first_name").value,
+            last_name: document.getElementById("last_name").value,
+            num_rooms: document.getElementById("num_rooms").value,
+            special_requirements: document.getElementById("special_requirements").value,
+            stay_length: document.getElementById("stay_length").value
+        };
+
+        // Add new formData to the array
+        storedData.push(formData);
+
+        // Save the updated array back to localStorage
+        localStorage.setItem("dormRegistrations", JSON.stringify(storedData));
+
+        console.log("Form Data Added:", formData);
+        console.log("Updated Storage:", storedData);
+    });
+
+    document.getElementById("clearData").addEventListener("click", function() {
+        localStorage.removeItem("dormRegistrations");
+        console.log("All stored data cleared.");
+    });
+</script>
