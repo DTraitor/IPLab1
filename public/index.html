@@ -2,32 +2,32 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Реєстрація в гуртожитку</title>
+  <title>Dormitory Registration</title>
 </head>
 <body>
-  <h1>Форма реєстрації в гуртожитку</h1>
+  <h1>Form</h1>
   <form id="dormForm">
-    <label>Ім'я: <input type="text" name="firstName" required></label><br>
-    <label>Прізвище: <input type="text" name="lastName" required></label><br>
-    <label>Кількість кімнат: <input type="number" name="roomCount" min="1" required></label><br>
-    <label>Спеціальні вимоги: <input type="text" name="specialReq"></label><br>
-    <label>Тривалість перебування (днів): <input type="number" name="stayDuration" min="1" required></label><br>
-    <button type="submit">Надіслати</button>
+    <label>Name: <input type="text" name="firstName" required></label><br>
+    <label>Surname: <input type="text" name="lastName" required></label><br>
+    <label>Number of Rooms: <input type="number" name="roomCount" min="1" required></label><br>
+    <label>Special Requirements: <input type="text" name="specialReq"></label><br>
+    <label>Stay Duration: <input type="number" name="stayDuration" min="1" required></label><br>
+    <button type="submit">Send</button>
   </form>
 
-  <h2>Переглянути записи</h2>
-  <button onclick="loadRecords()">Оновити список</button>
+  <h2>Display the Records</h2>
+  <button onclick="loadRecords()">Reload the list</button>
   
   <table border="1" id="recordsTable" style="margin-top:1em; border-collapse: collapse;">
     <thead>
       <tr>
         <th>ID</th>
-        <th>Ім'я</th>
-        <th>Прізвище</th>
-        <th>Кімнат</th>
-        <th>Вимоги</th>
-        <th>Тривалість</th>
-        <th>Дії</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Rooms</th>
+        <th>Requirements</th>
+        <th>Duration</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -49,14 +49,14 @@
           <td>${record.roomCount}</td>
           <td>${record.specialReq || ""}</td>
           <td>${record.stayDuration}</td>
-          <td><button onclick="deleteRecord(${record.id})">Видалити</button></td>
+          <td><button onclick="deleteRecord(${record.id})">Delete</button></td>
         `;
         tbody.appendChild(tr);
       }
     }
   
     async function deleteRecord(id) {
-      if (!confirm("Ви впевнені, що хочете видалити цей запис?")) return;
+      if (!confirm("Are you sure you want to delete the record?")) return;
   
       const res = await fetch(`/api/records/${id}`, {
         method: "DELETE",
@@ -64,7 +64,7 @@
   
       const result = await res.json();
       alert(result.message);
-      loadRecords(); // Оновити список
+      loadRecords(); 
     }
   </script>  
 

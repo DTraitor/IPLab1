@@ -9,24 +9,24 @@ const JSON_PATH = "./data/records.json";
 const XML_PATH = "./data/records.xml";
 
 app.get("/api/records.json", (req, res) => {
-  if (!fs.existsSync(JSON_PATH)) return res.status(404).send("JSON файл не знайдено.");
+  if (!fs.existsSync(JSON_PATH)) return res.status(404).send("JSON not found.");
   res.type("application/json").send(fs.readFileSync(JSON_PATH));
 });
 
 app.get("/api/records.xml", (req, res) => {
-  if (!fs.existsSync(XML_PATH)) return res.status(404).send("XML файл не знайдено.");
+  if (!fs.existsSync(XML_PATH)) return res.status(404).send("XML not found.");
   res.type("application/xml").send(fs.readFileSync(XML_PATH));
 });
 
 app.delete("/api/records/:id", (req, res) => {
     let records = readJson();
     const index = records.findIndex(r => r.id == req.params.id);
-    if (index === -1) return res.status(404).json({ message: "Запис не знайдено" });
+    if (index === -1) return res.status(404).json({ message: "Record not found" });
   
     const deleted = records.splice(index, 1)[0];
     writeJson(records);
     writeXml(records);
-    res.json({ message: "Запис видалено", record: deleted });
+    res.json({ message: "Record deleted", record: deleted });
   });
   
 
@@ -54,7 +54,7 @@ app.post("/api/records", (req, res) => {
   records.push(newRecord);
   writeJson(records);
   writeXml(records);
-  res.json({ message: "Запис створено", record: newRecord });
+  res.json({ message: "Record created", record: newRecord });
 });
 
 app.get("/api/records", (req, res) => {
@@ -64,23 +64,23 @@ app.get("/api/records", (req, res) => {
 app.put("/api/records/:id", (req, res) => {
   const records = readJson();
   const index = records.findIndex(r => r.id == req.params.id);
-  if (index === -1) return res.status(404).json({ message: "Запис не знайдено" });
+  if (index === -1) return res.status(404).json({ message: "Record not foun" });
 
   records[index] = { ...records[index], ...req.body };
   writeJson(records);
   writeXml(records);
-  res.json({ message: "Запис оновлено", record: records[index] });
+  res.json({ message: "Record updated", record: records[index] });
 });
 
 app.delete("/api/records/:id", (req, res) => {
   let records = readJson();
   const index = records.findIndex(r => r.id == req.params.id);
-  if (index === -1) return res.status(404).json({ message: "Запис не знайдено" });
+  if (index === -1) return res.status(404).json({ message: "Record not found" });
 
   const deleted = records.splice(index, 1)[0];
   writeJson(records);
   writeXml(records);
-  res.json({ message: "Запис видалено", record: deleted });
+  res.json({ message: "Record deleted", record: deleted });
 });
 
-app.listen(PORT, () => console.log(`Сервер працює на http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server address: http://localhost:${PORT}`));

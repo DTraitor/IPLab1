@@ -1,11 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<records>
-  <record>
-    <id>1745333393066</id>
-    <firstName>12312</firstName>
-    <lastName>123</lastName>
-    <roomCount>23</roomCount>
-    <specialReq>12</specialReq>
-    <stayDuration>12</stayDuration>
-  </record>
-</records>
+<records/>
