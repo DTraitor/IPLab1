@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Реєстрація в гуртожитку</title>
+</head>
+<body>
+  <h1>Форма реєстрації в гуртожитку</h1>
+  <form id="dormForm">
+    <label>Ім'я: <input type="text" name="firstName" required></label><br>
+    <label>Прізвище: <input type="text" name="lastName" required></label><br>
+    <label>Кількість кімнат: <input type="number" name="roomCount" min="1" required></label><br>
+    <label>Спеціальні вимоги: <input type="text" name="specialReq"></label><br>
+    <label>Тривалість перебування (днів): <input type="number" name="stayDuration" min="1" required></label><br>
+    <button type="submit">Надіслати</button>
+  </form>
+
+  <h2>Переглянути записи</h2>
+  <button onclick="loadRecords()">Оновити список</button>
+  
+  <table border="1" id="recordsTable" style="margin-top:1em; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Ім'я</th>
+        <th>Прізвище</th>
+        <th>Кімнат</th>
+        <th>Вимоги</th>
+        <th>Тривалість</th>
+        <th>Дії</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  
+  <script>
+    async function loadRecords() {
+      const res = await fetch("/api/records");
+      const records = await res.json();
+      const tbody = document.querySelector("#recordsTable tbody");
+      tbody.innerHTML = "";
+  
+      for (const record of records) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${record.id}</td>
+          <td>${record.firstName}</td>
+          <td>${record.lastName}</td>
+          <td>${record.roomCount}</td>
+          <td>${record.specialReq || ""}</td>
+          <td>${record.stayDuration}</td>
+          <td><button onclick="deleteRecord(${record.id})">Видалити</button></td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+  
+    async function deleteRecord(id) {
+      if (!confirm("Ви впевнені, що хочете видалити цей запис?")) return;
+  
+      const res = await fetch(`/api/records/${id}`, {
+        method: "DELETE",
+      });
+  
+      const result = await res.json();
+      alert(result.message);
+      loadRecords(); // Оновити список
+    }
+  </script>  
+
+  <script>
+    document.getElementById("dormForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      const response = await fetch("/api/records", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      alert(result.message);
+    });
+  </script>
+</body>
+</html>
